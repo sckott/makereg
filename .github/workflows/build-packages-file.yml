@@ -1,0 +1,33 @@
+name: build-packages-file
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "2 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ubuntu:focal
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      REPO_PAT: ${{ secrets.REPO_PAT }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y curl git ruby-faraday ruby-json ruby-octokit
+    - name: Copy files
+      run: |
+        cp inst/automation/git_urls.rb .
+        cp inst/automation/git_urls.sh .
+    - name: Make packages.json
+      run: |
+        git config --global user.email "myrmecocystus+ropenscibot@gmail.com"
+        git config --global user.name "ropenscibot"
+        bash git_urls.sh
+        head packages.json
