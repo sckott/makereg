@@ -1,12 +1,9 @@
 name: build-packages-file
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - master
-  schedule:
-    - cron: "2 * * * *"
+      - main
 
 jobs:
   build:
