@@ -43,7 +43,7 @@ end
 # ropensci
 res_ropensci = []
 (1..5).each do |x|
-  res_ropensci << fetch_gh('ropensci', x)
+  res_ropensci << fetch_gh('ropensciadfadsfadsf', x)
 end
 
 # ropenscilabs
